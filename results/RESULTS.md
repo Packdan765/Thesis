@@ -304,24 +304,3 @@ Our experiments show that option collapse stems from:
 | `fig_h3_smdp_options.jpg` | SMDP option usage breakdown |
 
 ---
-
-## Recommendations
-
-### For Best Results
-
-1. **Start with MDP**: Use flat architecture for reliable coverage
-2. **Use state_machine simulator**: Cleaner reward signals for learning
-3. **Monitor OCI**: Watch for collapse (OCI > 3.0)
-4. **Tune entropy**: Higher entropy (0.15+) can delay collapse
-
-### For Research
-
-1. **Compare architectures**: Run both SMDP and MDP on same conditions
-2. **Multiple seeds**: Use seeds 1, 2, 3 for statistical significance
-3. **Long training**: 1000+ episodes to observe collapse dynamics
-
-### For Production
-
-1. **MDP recommended**: More reliable coverage
-2. **sim8 or state_machine**: Faster than sim8_original
-3. **Augmented rewards**: Better transition behavior
