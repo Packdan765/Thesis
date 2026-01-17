@@ -87,8 +87,7 @@ Select the visitor simulator with `--simulator`:
 
 | Simulator | Description | Use Case |
 |-----------|-------------|----------|
-| `sim8` (default) | Lightweight adapter with templates + statistical gaze | Fast training, development |
-| `sim8_original` | Full neural simulator (T5 + VAE) | Research, realistic behavior |
+| `sim8` (default) | Lightweight adapter with templates + statistical gaze | Fast training, lightweight version of previous work of colleague |
 | `state_machine` | Literature-grounded state machine | Deterministic, interpretable |
 
 ```bash
@@ -318,3 +317,4 @@ If you use this code in your research, please cite:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
