@@ -304,3 +304,116 @@ Our experiments show that option collapse stems from:
 | `fig_h3_smdp_options.jpg` | SMDP option usage breakdown |
 
 ---
+
+## Simulator Limitations & Deployment Challenges
+
+### The Simulator Gap
+
+A critical limitation of this work is that **none of the three simulators adequately capture real visitor behavior**. While they enable controlled experiments and hypothesis testing, they fail to model the complexity and unpredictability of actual museum visitors.
+
+### Observed Behaviors in Simulated Training
+
+**SMDP (Hierarchical)**:
+- Tends to collapse to spamming "Explain" option
+- Rarely uses AskQuestion or OfferTransition effectively
+- Gets stuck at single exhibits due to option collapse
+
+**MDP (Flat)**:
+- More balanced than SMDP, but still shows patterns
+- Spams "ExplainNewFact" subaction when facts are available
+- Transitions only when exhibit is exhausted (no more new facts)
+- Lacks nuanced visitor engagement modeling
+
+### Why This Happens
+
+The simulators, despite their differences, share fundamental limitations:
+
+1. **Simplified visitor responses**: Real visitors have complex, context-dependent reactions that our templates and state machines cannot capture
+2. **Deterministic or template-based**: Real behavior is highly variable and adaptive
+3. **Missing social dynamics**: Real visitors respond to guide personality, group dynamics, fatigue, and external factors
+4. **Limited feedback signals**: Simulators provide structured rewards (dwell time, confusion states) but miss subtle engagement cues
+
+### Deployment Reality Check
+
+**Critical concern**: Models trained on these simulators will likely exhibit problematic behaviors when deployed with real visitors:
+
+- **SMDP models** will spam "Explain" actions, overwhelming visitors with information
+- **MDP models** will spam "ExplainNewFact" until exhibits are exhausted, then abruptly transition
+- Both architectures lack the nuanced understanding needed for natural, adaptive dialogue
+
+The simulators are **research tools**, not production-ready proxies for real visitor behavior. They reveal algorithmic issues (like option collapse) but cannot validate that learned policies will work with actual humans.
+
+### The Need for Real Data
+
+To move from research to deployment, we need:
+
+1. **Real visitor interaction data**: Recordings of actual museum tours with human guides
+2. **Visitor behavior datasets**: Gaze patterns, engagement signals, and dialogue responses from real visits
+3. **Human-in-the-loop evaluation**: Test trained policies with real visitors before deployment
+4. **Iterative refinement**: Use real feedback to improve both simulators and training procedures
+
+---
+
+## Future Work
+
+### Primary Direction: Real-World Data Collection
+
+The most critical next step is **gathering data that better proxies real people**:
+
+#### 1. Visitor Interaction Datasets
+
+**Collect**:
+- Audio/video recordings of museum tours with human guides
+- Visitor gaze tracking data (eye movements, attention patterns)
+- Dialogue transcripts with timing and context
+- Visitor feedback (surveys, ratings, engagement measures)
+
+**Use for**:
+- Training more realistic simulators
+- Validating learned policies
+- Understanding real visitor behavior patterns
+
+#### 2. Human-in-the-Loop Training
+
+**Approach**:
+- Deploy partially-trained agents with real visitors
+- Collect interaction data and feedback
+- Use human feedback as reward signal
+- Iteratively improve policies based on real-world performance
+
+**Challenges**:
+- Ethical considerations (visitor consent, data privacy)
+- Cost and logistics of real-world deployment
+- Safety (ensuring agent doesn't frustrate visitors)
+
+#### 3. Improved Simulator Development
+
+**Goals**:
+- Train neural simulators on real visitor data
+- Model visitor personality, fatigue, and engagement more accurately
+- Capture long-term visitor satisfaction, not just immediate rewards
+
+**Methods**:
+- Fine-tune language models on real visitor dialogue
+- Train generative models for visitor responses
+- Incorporate visitor demographic and contextual factors
+
+#### 4. Transfer Learning from Simulation to Reality
+
+**Research questions**:
+- Can policies trained on simulators transfer to real visitors?
+- What simulator features are most important for transfer?
+- How much real data is needed to fine-tune simulated policies?
+
+#### 5. Evaluation Frameworks
+
+**Develop**:
+- Metrics that correlate with real visitor satisfaction
+- Evaluation protocols using human evaluators
+- Long-term engagement measures (return visits, recommendations)
+
+### Secondary Directions
+
+- **Algorithm improvements**: Better credit assignment, reward shaping, termination learning
+- **Architecture exploration**: Alternative hierarchical structures, attention mechanisms
+- **Multi-modal inputs**: Incorporate visual cues, visitor body language, environmental context
